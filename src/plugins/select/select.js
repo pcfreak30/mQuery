@@ -8,5 +8,9 @@ mq.prototype.select = function (parameter, context) {
     return mq().generate(parameter);
   }
 
+  if (typeof window.Sizzle !== 'undefined') {
+    return Sizzle(parameter, (context || document));
+  }
+
   return (context || document).querySelectorAll(parameter);
 };
