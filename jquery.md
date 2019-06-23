@@ -176,7 +176,7 @@ $('.myclass').first().html();
 // Umbrella: direct access to DOM property innerHTML
 u('.myclass').first().innerHTML;
 
-// Umbrella: wrapping it in u(...) again
+mq
 u( u('.myclass').first() ).html();
 ```
 

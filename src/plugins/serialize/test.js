@@ -2,12 +2,12 @@
 describe(".serialize()", function() {
 
   afterEach(function() {
-    u('.serialize-test').remove();
+    mq('.serialize-test').remove();
   });
 
 
   it("should be defined", function() {
-    expect(typeof u('.serialize-test').serialize).to.equal('function');
+    expect(typeof mq('.serialize-test').serialize).to.equal('function');
   });
 
   it("can handle arrays", function() {
@@ -17,7 +17,7 @@ describe(".serialize()", function() {
         <input name="test[]" value="b"> \
       </form> \
     ');
-    expect(u('.serialize-test').serialize()).to.equal('test%5B%5D=a&test%5B%5D=b');
+    expect(mq('.serialize-test').serialize()).to.equal('test%5B%5D=a&test%5B%5D=b');
   });
 
 
@@ -32,6 +32,6 @@ describe(".serialize()", function() {
         </select> \
       </form> \
     ');
-    expect(u('.serialize-test').serialize()).to.equal('select=a&select=b');
+    expect(mq('.serialize-test').serialize()).to.equal('select=a&select=b');
   });
 });

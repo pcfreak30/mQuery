@@ -2,7 +2,7 @@
 
 // Normalize the arguments to an array of strings
 // Allow for several class names like "a b, c" and several parameters
-u.prototype.args = function (args, node, i) {
+mq.prototype.args = function (args, node, i) {
   if (typeof args === 'function') {
     args = args(node, i);
   }

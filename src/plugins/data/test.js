@@ -22,6 +22,6 @@ describe(".data(name, value)", function() {
   });
 
   it("can be called with no nodes", function() {
-    expect(u('dfsdf').data('title')).to.equal('');
+    expect(mq('dfsdf').data('title')).to.equal('');
   });
 });

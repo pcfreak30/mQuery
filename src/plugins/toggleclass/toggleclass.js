@@ -1,5 +1,5 @@
 // Activate/deactivate classes in the elements
-u.prototype.toggleClass = function (classes, addOrRemove) {
+mq.prototype.toggleClass = function (classes, addOrRemove) {
   /* jshint -W018 */
   // Check if addOrRemove was passed as a boolean
   if (!!addOrRemove === addOrRemove) {

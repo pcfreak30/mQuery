@@ -1,7 +1,7 @@
 // insert tall element to test scroll()
 var elHeight = window.innerHeight + 100;
 var el = '<div style="height:' + elHeight + 'px" id="scrollTest"></div>';
-u('body').append(el);
+mq('body').append(el);
 
 
 describe('.scroll()', function() {
@@ -11,17 +11,17 @@ describe('.scroll()', function() {
   });
 
   it('should return this Umbrella Object', function() {
-    size(u('li').scroll(), u('li').length);
+    size(mq('li').scroll(), mq('li').length);
   });
 
   it('can scroll to the element', function(done) {
-    expect(u('body').size().top).to.be.above(-10);
-    u('#scrollTest').scroll();
+    expect(mq('body').size().top).to.be.above(-10);
+    mq('#scrollTest').scroll();
 
     setTimeout(function(){
-      expect(u('body').size().top).to.be.below(-10);
-      u('#scrollTest').remove();
-      u('body').scroll();
+      expect(mq('body').size().top).to.be.below(-10);
+      mq('#scrollTest').remove();
+      mq('body').scroll();
       done();
     }, 100);
   });

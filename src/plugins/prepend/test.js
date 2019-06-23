@@ -10,11 +10,11 @@ describe(".prepend()", function() {
 
     // Just in case it stringifies the callback
     expect(base.html().match('function')).to.equal(null);
-    expect(u('.bla, .blu').length).to.equal(0);
+    expect(mq('.bla, .blu').length).to.equal(0);
   });
 
   afterEach(function(){
-    u('.bla, .blu').remove();
+    mq('.bla, .blu').remove();
   });
 
   it("should be a function", function() {
@@ -44,7 +44,7 @@ describe(".prepend()", function() {
   });
 
   it("can generate some text", function(){
-    var list = u("<div>");
+    var list = mq("<div>");
     if (work) list.prepend  (function(n){ return n + "\n" }, ['a', 'b']);
 
     expect(list.children().length).to.equal(0);

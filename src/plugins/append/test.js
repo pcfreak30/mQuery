@@ -7,14 +7,14 @@ describe(".append(html)", function() {
   }
 
   beforeEach(function(){
-    expect(u('.bla, .blu').length).to.equal(0);
+    expect(mq('.bla, .blu').length).to.equal(0);
   });
 
   afterEach(function(){
 
     // Just in case it stringifies the callback
     expect(base.html().match('function')).to.equal(null);
-    u('.bla, .blu').remove();
+    mq('.bla, .blu').remove();
   });
 
 
@@ -75,13 +75,13 @@ describe(".append(html)", function() {
     });
 
     it("can append a table row", function() {
-      var table = u('table.tbl').append('<tr><td>Hi</td></tr>');
+      var table = mq('table.tbl').append('<tr><td>Hi</td></tr>');
       var result = '<table class="tbl"><tr><td>Hi</td></tr></table>';
       expect(table.nodes[0].outerHTML).to.equal(result);
     });
 
     it("can add just text", function() {
-      var frag = u('<div>').append('Hello world!\n');
+      var frag = mq('<div>').append('Hello world!\n');
       same(frag.html(), 'Hello world!\n');
     });
   });
@@ -99,7 +99,7 @@ describe(".append(html)", function() {
     });
 
     it("can append simple text", function() {
-      var frag = u('<div>').append('Hello!\n', ['a', 'b']);
+      var frag = mq('<div>').append('Hello!\n', ['a', 'b']);
       same(frag.html(), 'Hello!\nHello!\n');
     });
   });
@@ -124,7 +124,9 @@ describe(".append(html)", function() {
     });
 
     it("can add just text", function() {
-      var frag = u('<div>').append(function(){ return 'Hello world!\n'; });
+      var frag = mq('<div>').append(function () {
+        return 'Hello world!\n';
+      });
       same(frag.html(), 'Hello world!\n');
     });
   });
@@ -142,7 +144,9 @@ describe(".append(html)", function() {
     });
 
     it("can add just text", function() {
-      var frag = u('<div>').append(function(){ return 'Hello world!\n'; }, ['a', 'b']);
+      var frag = mq('<div>').append(function () {
+        return 'Hello world!\n';
+      }, ['a', 'b']);
       same(frag.html(), 'Hello world!\nHello world!\n');
     });
 
@@ -157,27 +161,31 @@ describe(".append(html)", function() {
 
   describe("Umbrella instance", function(){
     it("Accepts a simple one", function(){
-      base.append(u('<div class="bla"></div>'));
+      base.append(mq('<div class="bla"></div>'));
       size('.base > .bla', 1)('.base > .bla:last-child', 1);
     });
 
     it("Keeps the events when appending", function(done){
-      base.append(u('<div class="bla">').on('click', function(){ done(); }));
+      base.append(mq('<div class="bla">').on('click', function () {
+        done();
+      }));
       size('.base > .bla', 1)('.base > .bla:last-child', 1);
-      u('.base .bla').trigger('click');
+      mq('.base .bla').trigger('click');
     });
 
     it("Clones multiple events when appending", function(done){
-      base.append(u('<div class="bla">').on('click touch', function(){ done(); }));
+      base.append(mq('<div class="bla">').on('click touch', function () {
+        done();
+      }));
       size('.base > .bla', 1)('.base > .bla:last-child', 1);
-      u('.base .bla').trigger('touch');
+      mq('.base .bla').trigger('touch');
     });
   });
 
 
 
   it("can generate some text", function(){
-    var list = u("<div>");
+    var list = mq("<div>");
     if (work) list.append(function(n){ return n + "\n" }, ['a', 'b']);
 
     expect(list.children().length).to.equal(0);
@@ -185,7 +193,7 @@ describe(".append(html)", function() {
   });
 
   it("can generate some text with number", function(){
-    var list = u("<div>");
+    var list = mq("<div>");
     if (work) list.append(function(n){ return n + "\n" }, 2);
 
     expect(list.children().length).to.equal(0);
@@ -193,22 +201,25 @@ describe(".append(html)", function() {
   });
 
   it("isn't called any time with 0", function(){
-    u('<div>').append(function(n){ throw new Error("Shouldn't be called"); }, 0);
+    mq('<div>').append(function (n) {
+      throw new Error("Shouldn't be called");
+    }, 0);
   });
 
 
 
   // Node
   it("can append an html node", function() {
-    base.append(u('<div class="bla">').first());
+    base.append(mq('<div class="bla">').first());
     size('.bla', 1);
   });
 
   it("should append supplied html to each targeted element and not only the last instance", function() {
-    base.append(u('<span class="test-span"></span><span class="test-span"></span><span class="test-span"></span><span class="test-span"></span>'));
-    base.append(u('<a class="append-me"></a>'));
+    base.append(mq(
+      '<span class="test-span"></span><span class="test-span"></span><span class="test-span"></span><span class="test-span"></span>'));
+    base.append(mq('<a class="append-me"></a>'));
 
-    u(".test-span").append(u(".append-me"));
+    mq(".test-span").append(mq(".append-me"));
 
     size(".test-span .append-me", 4);
   });

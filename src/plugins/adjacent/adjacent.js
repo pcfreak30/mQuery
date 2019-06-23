@@ -1,6 +1,6 @@
 // [INTERNAL USE ONLY]
 // Add text in the specified position. It is used by other functions
-u.prototype.adjacent = function (html, data, callback) {
+mq.prototype.adjacent = function (html, data, callback) {
   if (typeof data === 'number') {
     if (data === 0) {
       data = [];
@@ -13,9 +13,9 @@ u.prototype.adjacent = function (html, data, callback) {
   // we want to do it once even if there's no "data" and we accept a selector
   return this.each(function (node, j) {
     var fragment = document.createDocumentFragment();
-
+    var _this = this;
     // Allow for data to be falsy and still loop once
-    u(data || {}).map(function (el, i) {
+    mq(data || {}).map(function (el, i) {
       // Allow for callbacks that accept some data
       var part = (typeof html === 'function') ? html.call(this, el, i, node, j) : html;
 
@@ -23,11 +23,11 @@ u.prototype.adjacent = function (html, data, callback) {
         return this.generate(part);
       }
 
-      return u(part);
+      return mq(part);
     }).each(function (n) {
-      this.isInPage(n)
-        ? fragment.appendChild(u(n).clone().first())
-        : fragment.appendChild(n);
+      1 < _this.length && (n instanceof mq ? n : mq(n)).isInPage(n)
+      ? fragment.appendChild(mq(n).clone().first())
+      : fragment.appendChild(n);
     });
 
     callback.call(this, node, fragment);

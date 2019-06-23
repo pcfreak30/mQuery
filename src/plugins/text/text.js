@@ -1,5 +1,5 @@
 // Set or retrieve the text content from the matched node(s)
-u.prototype.text = function (text) {
+mq.prototype.text = function (text) {
   // Needs to check undefined as it might be ""
   if (text === undefined) {
     return this.first().textContent || '';

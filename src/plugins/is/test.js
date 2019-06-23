@@ -19,15 +19,15 @@ describe(".is(selector)", function() {
     expect(base.is(function(){ return true; })).to.equal(true);
     expect(base.is(function(){ return false; })).to.equal(false);
     base.is(function(node){
-      expect(u(node).is('.base')).to.equal(true);
+      expect(mq(node).is('.base')).to.equal(true);
     });
   });
 
   it("accepts an object", function() {
     expect(base.is(base)).to.equal(true);
-    expect(base.is(u('.bla'))).to.equal(false);
+    expect(base.is(mq('.bla'))).to.equal(false);
     base.is(function(node){
-      expect(u(node).is(base)).to.equal(true);
+      expect(mq(node).is(base)).to.equal(true);
     });
   });
 });

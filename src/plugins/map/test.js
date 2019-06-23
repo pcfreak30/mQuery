@@ -1,4 +1,6 @@
-var list = u('<ul>').append(function(i){ return '<li>'+i+'</li>'; }, 10).find('li');
+var list = mq('<ul>').append(function (i) {
+  return '<li>' + i + '</li>';
+}, 10).find('li');
 
 describe(".map(function(){})", function() {
 
@@ -7,22 +9,22 @@ describe(".map(function(){})", function() {
   });
 
   it("empty gives an error", function(){
-    same(u([0, 1, 2]).map(), u([0, 1, 2]));
+    same(mq([0, 1, 2]).map(), mq([0, 1, 2]));
   });
 
   it("can loop as each()", function() {
-    u([0, 1, 2, 3]).map(function(node, i){
+    mq([0, 1, 2, 3]).map(function (node, i) {
       expect(node).to.equal(i);
     });
 
-    u([3, 4, 5, 6]).map(function(node, i){
+    mq([3, 4, 5, 6]).map(function (node, i) {
       expect(node).to.equal(i + 3);
     });
   });
 
   it("can loop a real element", function() {
     base.map(function(node, i){
-      expect(u(node).hasClass('base')).to.equal(true);
+      expect(mq(node).hasClass('base')).to.equal(true);
       expect(i).to.equal(0);
     });
   });
@@ -62,14 +64,14 @@ describe(".map(function(){})", function() {
 
   it("accepts return of array of two elements", function(){
     same(list.map(function(node, i){
-      var newNode = u('<li>').html('a').first();
+      var newNode = mq('<li>').html('a').first();
       return [node, newNode];
     }).length, 20);
   });
 
   it("accepts return of umbrella instance", function(){
     var els = list.map(function(node, i){
-      return u(node);
+      return mq(node);
     }).each(function(node, i){
       expect(i).to.equal(parseInt(node.innerHTML));
     });
@@ -85,41 +87,42 @@ describe(".map(function(){})", function() {
   });
 
   it("can remove a single element", function() {
-    var final = u([1, 2, 3, 4]).map(function(node, i){
+    var final = mq([1, 2, 3, 4]).map(function (node, i) {
       return i === 0 ? false : node;
     });
     expect(final.length).to.equal(3);
   });
 
   it("can remove several elements", function() {
-    var final = u([1, 2, 3, 4]).map(function(node, i){
+    var final = mq([1, 2, 3, 4]).map(function (node, i) {
       return i < 3 ? false : node;
     });
     expect(final.length).to.equal(1);
   });
 
   it("can add an element", function() {
-    var final = u([1, 2, 3, 4]).map(function(node, i){
+    var final = mq([1, 2, 3, 4]).map(function (node, i) {
       return i === 0 ? [node, 'a'] : node;
     });
     expect(final.length).to.equal(5);
   });
 
   it("can add an many elements", function() {
-    var final = u([1, 2, 3, 4]).map(function(node, i){
+    var final = mq([1, 2, 3, 4]).map(function (node, i) {
       return [node + 'a', node + 'b', node + 'c'];
     });
     expect(final.length).to.equal(12);
   });
 
   it("has the right this", function(){
-    u(['a', 'b']).map(function(node, i){
-      expect(this instanceof u).to.equal(true);
+    mq(['a', 'b']).map(function (node, i) {
+      expect(this instanceof mq).to.equal(true);
     });
   });
 
   it("returns an umbrella object", function(){
-    var ret = u(['a', 'b']).map(function(){});
-    expect(ret instanceof u).to.equal(true);
+    var ret = mq(['a', 'b']).map(function () {
+    });
+    expect(ret instanceof mq).to.equal(true);
   });
 });

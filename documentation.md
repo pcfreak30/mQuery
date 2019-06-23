@@ -3,13 +3,13 @@
 Find nodes from the HTML with a CSS selector:
 
 ```js
-u('ul#demo li')
-u(document.getElementById('demo'))
-u(document.getElementsByClassName('demo'))
-u([ document.getElementById('demo') ])
-u( u('ul li') )
-u('<a>')
-u('li', context)
+mq('ul#demo li')
+mq(document.getElementById('demo'))
+mq(document.getElementsByClassName('demo'))
+mq([ document.getElementById('demo') ])
+mq( mq('ul li') )
+mq('<a>')
+mq('li', context)
 ```
 
 
@@ -25,12 +25,12 @@ The first parameter can be:
 - An HTML fragment as a string
 - Nothing
 
-The second parameter is only for the CSS selector, which indicates a portion of the DOM where the selector is applied. For example, with `u('li', u('ul').first())` it will find all of the `li` from the first `ul`.
+The second parameter is only for the CSS selector, which indicates a portion of the DOM where the selector is applied. For example, with `mq('li', mq('ul').first())` it will find all of the `li` from the first `ul`.
 
 
 \* actually it can be an array of anything you want as in `["a", "b"]`, however this is not officially supported and might change at any moment
 
-> You *should* use `u('#demo')` instead of `u(document.getElementById('demo'))`, internally it's optimized to do this in a fast way. That was only an example of what's possible.
+> You *should* use `mq('#demo')` instead of `mq(document.getElementById('demo'))`, internally it's optimized to do this in a fast way. That was only an example of what's possible.
 
 
 ### Return
@@ -44,28 +44,28 @@ An instance of Umbrella JS so you can chain it to any of the other methods.
 Select all of the list elements that are children of `ul`
 
 ```js
-var lis = u('ul > li');    // Same as u('ul').children('li');
+var lis = mq('ul > li');    mq
 ```
 
 Find all of the headers from the page to create a Table of Contents:
 
 ```js
-var headers = u('h1, h2, h3, h4, h5, h6');
+var headers = mq('h1, h2, h3, h4, h5, h6');
 ```
 
 Generate a link on the fly:
 
 ```js
-var link = u('<a>').addClass('main').attr({ href: '/hello' });
+var link = mq('<a>').addClass('main').attr({ href: '/hello' });
 ```
 
 You can use this to generate many kind of elements on the fly. For example, for a simple grocery list (using ES6 for simplicity):
 
 ```js
 var fruits = ['apple', 'strawberry', 'pear', 'banana'];
-var list = u('<ul>').append(fruit => `<li>${ fruit }</li>`, fruits);
+var list = mq('<ul>').append(fruit => `<li>${ fruit }</li>`, fruits);
 
-u('body').append(list);
+mq('body').append(list);
 ```
 
 
@@ -78,39 +78,39 @@ There are many native methods and properties that you can use. These can be call
 
 ```js
 // Single element from .nodes
-u('h1').nodes[0].classList.add('vanilla');
+mq('h1').nodes[0].classList.add('vanilla');
 
 // Single element
-u('h1').first().classList.add('vanilla', 'test');
+mq('h1').first().classList.add('vanilla', 'test');
 
 // Multiple elements. Note that the order is different from jQuery
-u('h2').each(function(el){
+mq('h2').each(function(el){
   el.classList.add('vanilla', 'test');
 });
 ```
 
-And for the arrays it's similar, you can call any array method on `u().nodes` since this is literally an array:
+And for the arrays it's similar, you can call any array method on `mq().nodes` since this is literally an array:
 
 ```js
-u('h2').nodes.forEach();
-var mapped = u('h2').nodes.map();
-var filtered = u('h2').nodes.filter();
-var good = u('h2').nodes.some();
+mq('h2').nodes.forEach();
+var mapped = mq('h2').nodes.map();
+var filtered = mq('h2').nodes.filter();
+var good = mq('h2').nodes.some();
 ```
 
 However, there are also some advantages of using Umbrella's methods instead of native methods. For example, with `.addClass()` vs native `classList.add()`:
 
 - **error prevention**: if nodes.length = 0, the single-element way will fail in the above implementation (since first() and nodes[0] are null)
 - **cross-browser**: the classList.add() with multiple elements [is not compatible with IE10-11 & Android 4.3-](http://caniuse.com/#search=classList)
-- **chainable**: `u('<div>').each(...).addClass(...);`
+- **chainable**: `mq('<div>').each(...).addClass(...);`
 - **more flexibility**: there are many ways to specify multiple classes with addClass, and only one way to specify them on the native way. Imagine that you have an array of classes, with the native method this becomes a nightmare. This is what it means to be flexible:
 
 ```js
-u('h2').addClass('vanilla', 'test');     // It accepts multiple parameters
-u('h2').addClass(['vanilla', 'test']);   // Also accept an array
-u('h2').addClass(['vanilla'], ['test']); // Or multiple arrays
-u('h2').addClass('vanilla, test');       // Strings with space and/or comma
-u('h2').addClass('vanilla', ['test'], 'one, more' ); // Or just whatever
+mq('h2').addClass('vanilla', 'test');     // It accepts multiple parameters
+mq('h2').addClass(['vanilla', 'test']);   // Also accept an array
+mq('h2').addClass(['vanilla'], ['test']); // Or multiple arrays
+mq('h2').addClass('vanilla, test');       // Strings with space and/or comma
+mq('h2').addClass('vanilla', ['test'], 'one, more' ); // Or just whatever
 ```
 
 So it's convenient that you know these limitations and act accordingly. Try to use native methods where it makes sense, then Umbrella's methods where it's better suited or then create your own methods when you need it.
@@ -123,7 +123,7 @@ You can check how many elements are matched with `.length`:
 
 ```js
 // Check how many <a> are in the page
-alert(u('a').length);
+alert(mq('a').length);
 ```
 
 ## .addClass()
@@ -158,13 +158,13 @@ Add html class(es) to all of the matched elements.
 Add the class `main` to all the `<h2>` from the page:
 
 ```js
-u("h2").addClass("main");
+mq("h2").addClass("main");
 ```
 
 Add the class `toValidate` and `ajaxify` to all the `<form>` present in the page:
 
 ```js
-u("form").addClass("toValidate", "ajaxify");
+mq("form").addClass("toValidate", "ajaxify");
 ```
 
 
@@ -185,9 +185,9 @@ Add some html as a sibling after each of the matched elements.
 .after(html)
 
 .after('<div>')
-.after(u('<div>'))
-.after(u('<div>').first()) // Same as document.createElement('div')
-.after(u('<div></div><div></div>'))
+.after(mq('<div>'))
+.after(mq('<div>').first()) // Same as document.createElement('div')
+.after(mq('<div></div><div></div>'))
 .after(function(){})
 .after(function(el){}, elements)
 .after(function(el){}, 10)
@@ -225,24 +225,24 @@ Add some html as a sibling after each of the matched elements.
 Add a separator `<hr>` after each of the main titles h1:
 
 ```js
-u("h1").after("<hr>");
+mq("h1").after("<hr>");
 ```
 
 Add three elements after the link. All of these methods are equivalent:
 
 ```js
 // Add them all like a single string
-u("a.main").after("<a>One</a><a>Two</a><a>Three</a>");
+mq("a.main").after("<a>One</a><a>Two</a><a>Three</a>");
 
 // Add them in a chain
-u("a.main").after("<a>Three</a>").after("<a>Two</a>").after("<a>One</a>");
+mq("a.main").after("<a>Three</a>").after("<a>Two</a>").after("<a>One</a>");
 
 // Add them with a function parameter
 var cb = function(txt){ return "<a>" + txt + "</a>" };
-u("a.main").after(cb, ["One", "Two", "Three"]);
+mq("a.main").after(cb, ["One", "Two", "Three"]);
 
 // Same as the previous one but with ES6
-u("a.main").after(txt => `<a>${ txt }</a>`, ["One", "Two", "Three"]);
+mq("a.main").after(txt => `<a>${ txt }</a>`, ["One", "Two", "Three"]);
 ```
 
 They all result in:
@@ -262,8 +262,8 @@ You can also add some events to them by creating an html node:
 ```js
 function greeting(){ alert("Hello world"); }
 
-u("a.main").after(function(){
-  return u('<a>').addClass('hi').on('click', greeting).html("Greetings!");
+mq("a.main").after(function(){
+  return mq('<a>').addClass('hi').on('click', greeting).html("Greetings!");
 });
 ```
 
@@ -285,9 +285,9 @@ Add some html as a child at the end of each of the matched elements
 .append(html)
 
 .append('<div>')
-.append(u('<div>'))
-.append(u('<div>').first()) // Same as document.createElement('div')
-.append(u('<div></div><div></div>'))
+.append(mq('<div>'))
+.append(mq('<div>').first()) // Same as document.createElement('div')
+.append(mq('<div></div><div></div>'))
 .append(function(){})
 .append(function(el){}, elements)
 .append(function(el){}, 10)
@@ -325,24 +325,24 @@ Add some html as a child at the end of each of the matched elements
 Add a footer to each of the articles
 
 ```js
-u("article").append("<footer>Hello world</footer>");
+mq("article").append("<footer>Hello world</footer>");
 ```
 
 Add three elements to the list. All of these methods are equivalent:
 
 ```js
 // Add them all like a single string
-u("ul").append("<li>One</li><li>Two</li><li>Three</li>");
+mq("ul").append("<li>One</li><li>Two</li><li>Three</li>");
 
 // Add them in a chain
-u("ul").append("<li>One</li>").append("<li>Two</li>").append("<li>Three</li>");
+mq("ul").append("<li>One</li>").append("<li>Two</li>").append("<li>Three</li>");
 
 // Add them with a function parameter
 var cb = function(txt){ return "<li>" + txt + "</li>" };
-u("ul").append(cb, ["One", "Two", "Three"]);
+mq("ul").append(cb, ["One", "Two", "Three"]);
 
 // Same as the previous one but with ES6
-u("ul").append(txt => `<li>${ txt }</li>`, ["One", "Two", "Three"]);
+mq("ul").append(txt => `<li>${ txt }</li>`, ["One", "Two", "Three"]);
 ```
 
 They all result in:
@@ -362,8 +362,8 @@ You can also add some events to them by creating an html node:
 ```js
 function greet(){ alert("Hello world"); }
 
-u("a.main").append(function(){
-  return u('<a>').addClass('hi').on('click', greet).html("Hey!");
+mq("a.main").append(function(){
+  return mq('<a>').addClass('hi').on('click', greet).html("Hey!");
 });
 ```
 
@@ -410,15 +410,15 @@ A simple javascript array consisting on the elements returned by the callback
 Javascript (by default):
 
 ```js
-u('ul li').array();
+mq('ul li').array();
 // ['Peter', 'Mery', 'John']
 ```
 
 Javascript (with custom callback):
 
 ```js
-u('ul li').array(function(node){
-  return { name: u(node).text() };
+mq('ul li').array(function(node){
+  return { name: mq(node).text() };
 });
 // [{ name: 'Peter' }, { name: 'Mery' }, { name: 'John' }]
 ```
@@ -471,7 +471,7 @@ You must understand that `.attr()` will only retrieve the attributes, not the pr
 Each property is different so you should consult each case. For example, if you wanted to get the property `checked` you could do:
 
 ```js
-u('.terms-os-service').is(':checked');
+mq('.terms-os-service').is(':checked');
 ```
 
 
@@ -481,13 +481,13 @@ u('.terms-os-service').is(':checked');
 Get the alt of an image:
 
 ```js
-u('img.hero').attr('alt');
+mq('img.hero').attr('alt');
 ```
 
 Set the src of all of the images:
 
 ```js
-u('img').attr({ src: 'demo.jpg' });
+mq('img').attr({ src: 'demo.jpg' });
 ```
 
 
@@ -503,9 +503,9 @@ Add some html before each of the matched elements.
 .before(html)
 
 .before('<div>')
-.before(u('<div>'))
-.before(u('<div>').first()) // Same as document.createElement('div')
-.before(u('<div></div><div></div>'))
+.before(mq('<div>'))
+.before(mq('<div>').first()) // Same as document.createElement('div')
+.before(mq('<div></div><div></div>'))
 .before(function(){})
 .before(function(el){}, elements)
 .append(function(el){}, 10)
@@ -543,24 +543,24 @@ Add some html before each of the matched elements.
 Add a header to each of the articles
 
 ```js
-u("article").after("<header>Hello world</header>");
+mq("article").after("<header>Hello world</header>");
 ```
 
 Add three elements before the link. All of these methods are equivalent:
 
 ```js
 // Add them all like a single string
-u("a.main").before("<a>One</a><a>Two</a><a>Three</a>");
+mq("a.main").before("<a>One</a><a>Two</a><a>Three</a>");
 
 // Add them in a chain
-u("a.main").before("<a>One</a>").before("<a>Two</a>").before("<a>Three</a>");
+mq("a.main").before("<a>One</a>").before("<a>Two</a>").before("<a>Three</a>");
 
 // Add them with a function parameter
 var cb = function(txt){ return "<a>" + txt + "</a>" };
-u("a.main").before(cb, ["One", "Two", "Three"]);
+mq("a.main").before(cb, ["One", "Two", "Three"]);
 
 // Same as the previous one but with ES6
-u("a.main").before(txt => `<a>${ txt }</a>`, ["One", "Two", "Three"]);
+mq("a.main").before(txt => `<a>${ txt }</a>`, ["One", "Two", "Three"]);
 ```
 
 They all result in:
@@ -580,8 +580,8 @@ You can also add some events to them by creating an html node:
 ```js
 function greeting(){ alert("Hello world"); }
 
-u("a.main").before(function(){
-  return u('<a>').addClass('hi').on('click', greeting).html("Greetings!");
+mq("a.main").before(function(){
+  return mq('<a>').addClass('hi').on('click', greeting).html("Greetings!");
 });
 ```
 
@@ -621,7 +621,7 @@ Get the direct children of all of the nodes with an optional filter
 Get the first `<li>` of every `<ul>`
 
 ```js
-u("ul").children('li:first-child');
+mq("ul").children('li:first-child');
 ```
 
 
@@ -639,16 +639,16 @@ u("ul").children('li:first-child');
 Create a deep copy of the set of matched elements. Includes matched element node and **all of its events** as well as its children **and all of their events** by **default**.
 
 ```js
-u('.elementToClone').clone()
+mq('.elementToClone').clone()
 ```
 
 
 
 ### Extensions
   - The following extensions are enabled by default:
-    - **events** clone the events of all of the nodes. To disable it globally, add `u.prototype.mirror.events = false;` to your code.
-    - **select** select input node values are copied to all cloned nodes. To disable globally, add `u.prototype.mirror.select = false;` to your code.
-    - **textarea** textarea input node values are copied to all cloned nodes. To disable globally, add `u.prototype.mirror.textarea = false;` to your code.
+    - **events** clone the events of all of the nodes. To disable it globally, add `mq.prototype.mirror.events = false;` to your code.
+    - **select** select input node values are copied to all cloned nodes. To disable globally, add `mq.prototype.mirror.select = false;` to your code.
+    - **textarea** textarea input node values are copied to all cloned nodes. To disable globally, add `mq.prototype.mirror.textarea = false;` to your code.
 
 
 ### Return
@@ -669,8 +669,8 @@ Clone a node and append to another.
 ```
 
 ```js
-var clone = u("testClone1").clone();
-u(".cloneDestination").append(clone);
+var clone = mq("testClone1").clone();
+mq(".cloneDestination").append(clone);
 
 ```
 Result:
@@ -712,7 +712,7 @@ Find the first ancestor that matches the selector for each node
 Get the ul of every li
 
 ```js
-u("li").closest('ul');
+mq("li").closest('ul');
 ```
 
 
@@ -778,15 +778,15 @@ Get the value for data-id:
 ```
 
 ```js
-u('ul li').first().data('id'); // 0
+mq('ul li').first().data('id'); // 0
 ```
 
 Set the data-id of an element:
 
 ```js
-u('ul li').first().data({ id: '1' }); // <li data-id='1'>First</li>
+mq('ul li').first().data({ id: '1' }); // <li data-id='1'>First</li>
 
-u('ul li').first().data('id', '2'); // <li data-id='2'>First</li>
+mq('ul li').first().data('id', '2'); // <li data-id='2'>First</li>
 ```
 
 
@@ -820,8 +820,8 @@ Loop through all of the nodes and execute a callback for each
 Loop through all of the links and add them a `target="_blank"`:
 
 ```js
-u('a').each(function(node, i){
-  u(node).attr({ target: '_blank' });
+mq('a').each(function(node, i){
+  mq(node).attr({ target: '_blank' });
 });
 ```
 ## .empty()
@@ -848,7 +848,7 @@ This method doesn't accept any parameters
 Removes all child nodes from all containers:
 
 ```js
-u("div.container").empty();
+mq("div.container").empty();
 ```
 
 
@@ -862,8 +862,8 @@ Remove all the nodes that doesn't match the criteria
 
 ```js
 .filter('a')
-.filter(u('a'))
-.filter(function(node, i){ return u(node).is('a'); })
+.filter(mq('a'))
+.filter(function(node, i){ return mq(node).is('a'); })
 ```
 
 
@@ -885,22 +885,22 @@ An instance of Umbrella with the nodes that passed the filter.
 Get only the active links
 
 ```js
-var links = u('a').filter('.active');
+var links = mq('a').filter('.active');
 ```
 
 Get all of the paragraphs with a link:
 
 ```js
-var paragraphs = u('p').filter(function(node){
-  return u(node).find('a').length > 0;
+var paragraphs = mq('p').filter(function(node){
+  return mq(node).find('a').length > 0;
 });
 ```
 
 Get only the inputs with an answer above 5 and show an error:
 
 ```js
-u('input').filter(function(node, i){
-  if (parseInt(u(node).first().value) > 5) {
+mq('input').filter(function(node, i){
+  if (parseInt(mq(node).first().value) > 5) {
     return true;
   }
 }).addClass('error');
@@ -939,14 +939,14 @@ An instance of Umbrella with the new children as nodes
 Get all of the links within all the paragraphs
 
 ```js
-u("p").find('a');
+mq("p").find('a');
 ```
 
 Get the required fields within a submitting form:
 
 ```js
-u('form').on('submit', function(e){
-  var required = u(this).find('[required]');
+mq('form').on('submit', function(e){
+  var required = mq(this).find('[required]');
 });
 ```
 
@@ -985,7 +985,7 @@ The first html node or false if there is none.
 Retrieve the first element of a list:
 
 ```js
-var next = u("ul.demo li").first();
+var next = mq("ul.demo li").first();
 ```
 
 
@@ -998,14 +998,14 @@ var next = u("ul.demo li").first();
 This function is the same as [`on()`](#on), but it executes the `e.preventDefault()` so you don't need to do it. So these two are exactly the same:
 
 ```js
-u('form.login').on('submit', function(e){
+mq('form.login').on('submit', function(e){
   e.preventDefault();
   // logic
 });
 ```
 
 ```js
-u('form.login').handle('submit', function(e){
+mq('form.login').handle('submit', function(e){
   // logic
 });
 ```
@@ -1036,7 +1036,7 @@ Find if any of the matched elements contains the class passed:
 If more than one class is passed, they are checked **with the AND condition** similar to:
 
 ```js
-u("a").hasClass("button") && u("a").hasClass("primary");
+mq("a").hasClass("button") && mq("a").hasClass("primary");
 ```
 
 
@@ -1056,13 +1056,13 @@ u("a").hasClass("button") && u("a").hasClass("primary");
 You can also check manually if it has several classes with the OR parameter with:
 
 ```js
-u('a').is('.button, .primary');
+mq('a').is('.button, .primary');
 ```
 
 And with the AND parameter:
 
 ```js
-u('a').is('.button.primary');
+mq('a').is('.button.primary');
 ```
 
 
@@ -1073,11 +1073,11 @@ Toggle the color of a button depending on the status
 
 <script src="//umbrellajs.com/umbrella.min.js"></script>
 <script>
-  u(".example").on('click', function() {
-    if(u(this).hasClass("error")) {
-      u(this).removeClass("error").html("Click me");
+  mq(".example").on('click', function() {
+    if(mq(this).hasClass("error")) {
+      mq(this).removeClass("error").html("Click me");
     } else {
-      u(this).addClass("error").html("Confirm");
+      mq(this).addClass("error").html("Confirm");
     }
   });
 </script>
@@ -1129,13 +1129,13 @@ should pass no parameter so it retrieves the html.
 Get the main title:
 
 ```js
-var title = u('h1').html();
+var title = mq('h1').html();
 ```
 
 Set the main title:
 
 ```js
-u('h1').html('Hello world');
+mq('h1').html('Hello world');
 ```
 
 
@@ -1151,7 +1151,7 @@ Check whether any of the nodes matches the selector
 
 ```js
 .is('a')
-.is(u('a'))
+.is(mq('a'))
 .is(function(){ return Math.random() > 0.5 })
 ```
 
@@ -1177,10 +1177,10 @@ Check whether any of the nodes matches the selector
 Check if the current form needs to be validated
 
 ```js
-u('form.subscribe').on('submit', function(e) {
+mq('form.subscribe').on('submit', function(e) {
 
-  // Same as u('form.subscribe').hasClass('validate')
-  if (u(e.target).is('.validate')) {
+  // Same as mq('form.subscribe').hasClass('validate')
+  if (mq(e.target).is('.validate')) {
     validate();
   }
 
@@ -1221,7 +1221,7 @@ The last html node or false if there is none.
 Retrieve the last element of a list:
 
 ```js
-var next = u("ul.demo li").last();
+var next = mq("ul.demo li").last();
 ```
 
 
@@ -1244,9 +1244,9 @@ Change the content of the current instance by looping each element
 A single callback that returns the element(s) that are going to be kept:
 
 ```js
-var links = u('.special li').map(function(node, i){
+var links = mq('.special li').map(function(node, i){
   if (parseInt(node.innerHTML) > 10) {
-    return '<a>' + u(node).data('id') + '</a>';
+    return '<a>' + mq(node).data('id') + '</a>';
   }
 }).addClass('expensive');
 ```
@@ -1268,7 +1268,7 @@ An instance of Umbrella with the nodes passed
 Get the parent elements (see [.parent()](#parent)):
 
 ```js
-var lists = u('li').map(function(node){ return node.parentNode });
+var lists = mq('li').map(function(node){ return node.parentNode });
 ```
 
 
@@ -1283,7 +1283,7 @@ Remove known nodes from nodes
 
 ```js
 .not('a')
-.not(u('a'))
+.not(mq('a'))
 .not(function(node){ return Math.random() > 0.5; })
 ```
 
@@ -1316,13 +1316,13 @@ Remove known nodes from nodes
 Get only the non-active links on paragraphs
 
 ```js
-var nonactive_links = u('.menu a').not('.active');
+var nonactive_links = mq('.menu a').not('.active');
 ```
 
 Get all of the active:
 
 ```js
-active_links = u('.menu a').not(nonactive_links);
+active_links = mq('.menu a').not(nonactive_links);
 ```
 
 
@@ -1370,13 +1370,13 @@ const listener = function() {
 }
 
 //Add listener
-u('.off-multiple-test').on('click', listener);
+mq('.off-multiple-test').on('click', listener);
 //Trigger event
-u('.off-multiple-test').trigger('click'); //Alert appears
+mq('.off-multiple-test').trigger('click'); //Alert appears
 //Remove listener
-u('.off-multiple-test').off('click', listener);
+mq('.off-multiple-test').off('click', listener);
 //Trigger event
-u('.off-multiple-test').trigger('click'); //No alert
+mq('.off-multiple-test').trigger('click'); //No alert
 ```
 
 ### Related
@@ -1436,22 +1436,22 @@ An auto-save feature that submits the form through AJAX every 10 seconds
 
 ```js
 // Show 'test' when the button test is clicked
-u('button.test').on('click', function(e) {
+mq('button.test').on('click', function(e) {
   alert("Test");
 });
 
 // Submit a form through Ajax
-u('form.test').on('submit', function(e){
+mq('form.test').on('submit', function(e){
 
   // Avoid submitting the form normally
   e.preventDefault();
 
   // Submit the form through AJAX
-  fetch(u(this).attr('action'), { body: u(this).serialize(), ... });
+  fetch(mq(this).attr('action'), { body: mq(this).serialize(), ... });
 });
 
 // Better 'onchange':
-u('input').on('change click blur paste', function(){
+mq('input').on('change click blur paste', function(){
   console.log("Maybe changed");
 });
 ```
@@ -1473,7 +1473,7 @@ Retrieve each parent of the matched nodes, optionally filtered by a selector
 ```js
 .parent()
 .parent('p')
-.parent(u('p'))
+.parent(mq('p'))
 .parent(function(node, i){})
 ```
 
@@ -1489,13 +1489,13 @@ Retrieve each parent of the matched nodes, optionally filtered by a selector
 Retrieve all of the parents of `<li>` in the page:
 
 ```js
-u('li').parent();
+mq('li').parent();
 ```
 
 Retrieve all the paragraphs that have a link as a direct child
 
 ```js
-u('a').parent('p');
+mq('a').parent('p');
 ```
 
 
@@ -1514,9 +1514,9 @@ Add some html as a child at the beginning of each of the matched elements.
 .prepend(html)
 
 .prepend('<div>')
-.prepend(u('<div>'))
-.prepend(u('<div>').first()) // Same as document.createElement('div')
-.prepend(u('<div></div><div></div>').nodes)
+.prepend(mq('<div>'))
+.prepend(mq('<div>').first()) // Same as document.createElement('div')
+.prepend(mq('<div></div><div></div>').nodes)
 .prepend(function(){})
 .prepend(function(el){}, elements)
 .prepend(function(el){}, 10)
@@ -1554,24 +1554,24 @@ Add some html as a child at the beginning of each of the matched elements.
 Add a header to each of the articles
 
 ```js
-u("article").prepend("<header>Hello world</header>");
+mq("article").prepend("<header>Hello world</header>");
 ```
 
 Add three elements at the beginning of the list. All of these methods are equivalent:
 
 ```js
 // Add them all like a single string
-u("ul").prepend("<li>One</li><li>Two</li><li>Three</li>");
+mq("ul").prepend("<li>One</li><li>Two</li><li>Three</li>");
 
 // Add them in a chain
-u("ul").prepend("<li>Three</li>").append("<li>Two</li>").append("<li>One</li>");
+mq("ul").prepend("<li>Three</li>").append("<li>Two</li>").append("<li>One</li>");
 
 // Add them with a function parameter
 var cb = function(txt){ return "<li>" + txt + "</li>" };
-u("ul").prepend(cb, ["One", "Two", "Three"]);
+mq("ul").prepend(cb, ["One", "Two", "Three"]);
 
 // Same as the previous one but with ES6
-u("ul").prepend(txt => `<li>${ txt }</li>`, ["One", "Two", "Three"]);
+mq("ul").prepend(txt => `<li>${ txt }</li>`, ["One", "Two", "Three"]);
 ```
 
 They all result in:
@@ -1591,8 +1591,8 @@ You can also add some events to them by creating an html node:
 ```js
 function greeting(){ alert("Hello world"); }
 
-u("a.main").prepend(function(){
-  return u('<a>').addClass('hi').on('click', greeting).html("Greetings!");
+mq("a.main").prepend(function(){
+  return mq('<a>').addClass('hi').on('click', greeting).html("Greetings!");
 });
 ```
 
@@ -1630,7 +1630,7 @@ This method doesn't accept any parameters
 Remove all the elements of a list:
 
 ```js
-u("ul.demo li").remove();
+mq("ul.demo li").remove();
 ```
 
 ## .removeClass()
@@ -1666,13 +1666,13 @@ Remove html class(es) to all of the matched elements.
 Remove the class `main` to all the `<h2>` from the page:
 
 ```js
-u("h2").removeClass("main");
+mq("h2").removeClass("main");
 ```
 
 Remove the class `toValidate` and `ajaxify` to all the `<form>` present in the page:
 
 ```js
-u("form").removeClass("toValidate", "ajaxify");
+mq("form").removeClass("toValidate", "ajaxify");
 ```
 
 ### Related
@@ -1707,13 +1707,13 @@ The newly created element.
 Replace elements with class 'save' by a button with class 'update':
 
 ```js
-u('.save').replace('<button class="update">Update</button>');
+mq('.save').replace('<button class="update">Update</button>');
 ```
 
 Replace element button by a link with class 'button':
 
 ```js
-u('button').replace(function(btn){
+mq('button').replace(function(btn){
   return '<a class="button">' + btn.innerHTML + '</a>';
 });
 ```
@@ -1732,15 +1732,15 @@ Scroll to the first matched element, smoothly if supported.
 Scroll to the first `<li>` in the page:
 
 ```js
-u('li').scroll();
+mq('li').scroll();
 ```
 
 On click event, scroll the first `<section>` element with the class "team":
 
 ```js
-u('a.team').on('click', function(e){
+mq('a.team').on('click', function(e){
   e.preventDefault();
-  u('section.team').scroll();
+  mq('section.team').scroll();
 });
 ```
 
@@ -1775,9 +1775,9 @@ When the user clicks on the "Send" button, the following handler can be used to 
 
 ```js
 // .handle() == .on() + preventDefault()
-u('form.contact').handle('submit', async e => {
+mq('form.contact').handle('submit', async e => {
   // Body: email=test@example.com&message=Hello+world
-  const body = u(e.target).serialize();
+  const body = mq(e.target).serialize();
   const data = await fetch('/contact', {
     method: 'POST', body
   }).then(res => res.json());
@@ -1789,7 +1789,7 @@ If you were using the native FormData:
 
 ```js
 // .handle() == .on() + preventDefault()
-u('form.contact').handle('submit', async e => {
+mq('form.contact').handle('submit', async e => {
   const body = new FormData(e.target);
   const data = await fetch('/contact', {
     method: 'POST', body
@@ -1824,13 +1824,13 @@ Get the siblings of all of the nodes with an optional filter
 Get the all the siblings of the hovered `<li>`
 
 ```js
-u("li:hover").siblings('li:first-child');
+mq("li:hover").siblings('li:first-child');
 ```
 
 Get all the siblings
 
 ```js
-u("li").siblings();
+mq("li").siblings();
 ```
 
 
@@ -1875,7 +1875,7 @@ Returns a simple object with the following properties referring to the first mat
 ### Examples
 
 ```js
-u('body').size();
+mq('body').size();
 // {"left":0,"right":400,"top":0,"height":300,"bottom":300,"width":400}
 ```
 
@@ -1918,13 +1918,13 @@ should pass no parameter so it retrieves the text from the first matched element
 Get the main title text:
 
 ```js
-var title = u('h1').text();
+var title = mq('h1').text();
 ```
 
 Set the main title text:
 
 ```js
-u('h1').text('Hello world');
+mq('h1').text('Hello world');
 ```
 
 
@@ -1963,25 +1963,25 @@ Toggles html class(es) to all of the matched elements.
 Add the class `main` to all the `<h2>` from the page:
 
 ```js
-u("h2").toggleClass("main");
+mq("h2").toggleClass("main");
 ```
 
 Add the class `toValidate` and remove `ajaxify` from the element `<form class="ajaxify">` present in the page:
 
 ```js
-u("form.ajaxify").toggleClass("toValidate ajaxify");
+mq("form.ajaxify").toggleClass("toValidate ajaxify");
 ```
 
 Force an `.addClass()` on the element `<h2>` from the page:
 
 ```js
-u("h2").toggleClass("main", true);
+mq("h2").toggleClass("main", true);
 ```
 
 Note however that this last example by itself doesn't make much sense as you could just use `addClass()` instead. It makes a lot more sense when the second parameter is checked dynamically:
 
 ```js
-u("h2").toggleClass("main", u('.accept').is(':checked'));
+mq("h2").toggleClass("main", mq('.accept').is(':checked'));
 ```
 
 
@@ -2027,7 +2027,7 @@ An auto-save feature that submits the form through AJAX every 10 seconds
 ```js
 // Submit it every 10s
 setInterval(function(){
-  u('button.save').trigger('click');
+  mq('button.save').trigger('click');
 }, 10000);
 ```
 
@@ -2042,7 +2042,7 @@ setInterval(function(){
 
 ## .wrap()
 
-Wraps the matched element(s) with the passed argument. The argument gets processed with the constructor u() and it accepts an html tag like ```.wrap('<div>')```
+Wraps the matched element(s) with the passed argument. The argument gets processed with the constructor mq() and it accepts an html tag like ```.wrap('<div>')```
 
 ```js
 .wrap(selector);
@@ -2071,7 +2071,7 @@ Original element:
 ```
 
 ```js
-u(".example").wrap('<a class="wrapper">');
+mq(".example").wrap('<a class="wrapper">');
 ```
 
 Result:
@@ -2084,7 +2084,7 @@ Result:
 Wrap an element in an html element and chain Umbrella methods:
 
 ```js
-u(".example").wrap('<a>').attr({class: "wrapper", href: "http://google.com"});
+mq(".example").wrap('<a>').attr({class: "wrapper", href: "http://google.com"});
 ```
 
 Result:
@@ -2104,7 +2104,7 @@ Wrap several elements in an html element
 ```
 
 ```js
-u(".example").wrap('<a>').attr({class: "wrapper", href: "http://google.com"});
+mq(".example").wrap('<a>').attr({class: "wrapper", href: "http://google.com"});
 ```
 
 Result:
@@ -2127,7 +2127,7 @@ Nested selector arguments:
 ```
 
 ```js
-u(".example").wrap('<div class="a1"><div class="b1"><div class="c1"></div></div></div>');
+mq(".example").wrap('<div class="a1"><div class="b1"><div class="c1"></div></div></div>');
 ```
 
 Result:
@@ -2150,7 +2150,7 @@ Nested selector arguments with multiple child nodes:
 ```
 
 ```js
-u(".example").wrap('<div class="a1"><div class="b1"><div class="c1"></div></div><div class="b2"><div class="c2"><div class="d1"></div></div></div></div>');
+mq(".example").wrap('<div class="a1"><div class="b1"><div class="c1"></div></div><div class="b2"><div class="c2"><div class="d1"></div></div></div></div>');
 ```
 
 Result:

@@ -43,7 +43,7 @@
     "grunt-markdown": "^0.7.0",
     "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-semistandard": "^1.0.6",
-    "marked": "^0.4.0",
+    "marked": "^0.6.2",
     "mocha-phantomjs": "^4.0.2"
   },
   "semistandard": {
@@ -62,5 +62,15 @@
       "u",
       "parseJson"
     ]
+  },
+  "dependencies": {
+    "grunt-umd": "^3.0.0",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-cli": "^2.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-umd": "^2.0.0"
   }
 }

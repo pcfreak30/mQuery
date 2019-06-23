@@ -7,7 +7,7 @@ describe(".handle(event, fn)", function() {
   });
 
   afterEach(function(){
-    u('.clickable').remove();
+    mq('.clickable').remove();
     base.off('click');
   });
 

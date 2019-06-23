@@ -1,7 +1,7 @@
 // [INTERNAL USE ONLY]
 
 // Create a string from different things
-u.prototype.str = function (node, i) {
+mq.prototype.str = function (node, i) {
   return function (arg) {
     // Call the function with the corresponding nodes
     if (typeof arg === 'function') {

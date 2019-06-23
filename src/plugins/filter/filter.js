@@ -1,6 +1,6 @@
 // .filter(selector)
 // Delete all of the nodes that don't pass the selector
-u.prototype.filter = function (selector) {
+mq.prototype.filter = function (selector) {
   // The default function if it's a CSS selector
   // Cannot change name to 'selector' since it'd mess with it inside this fn
   var callback = function (node) {
@@ -11,16 +11,16 @@ u.prototype.filter = function (selector) {
     return node.matches(selector || '*');
   };
 
-  // filter() receives a function as in .filter(e => u(e).children().length)
+  // filter() receives a function as in .filter(e => mq(e).children().length)
   if (typeof selector === 'function') callback = selector;
 
-  // filter() receives an instance of Umbrella as in .filter(u('a'))
-  if (selector instanceof u) {
+  // filter() receives an instance of Umbrella as in .filter(mq('a'))
+  if (selector instanceof mq) {
     callback = function (node) {
       return (selector.nodes).indexOf(node) !== -1;
     };
   }
 
   // Just a native filtering function for ultra-speed
-  return u(this.nodes.filter(callback));
+  return mq(this.nodes.filter(callback));
 };

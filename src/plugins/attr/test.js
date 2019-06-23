@@ -1,14 +1,11 @@
 // Testing the main file
 describe(".attr(name, value)", function() {
-  
-  
-  
+
   afterEach(function(){
     base.first().removeAttribute('title');
     expect(!base.attr('title')).to.equal(true);
   });
-  
-  
+
   it("should be a function", function() {
     expect(typeof base.attr).to.equal('function');
   });
@@ -34,6 +31,6 @@ describe(".attr(name, value)", function() {
   });
 
   it("can be called with no nodes", function() {
-    expect(u('dfsdf').attr('title')).to.equal('');
+    expect(mq('dfsdf').attr('title')).to.equal('');
   });
 });

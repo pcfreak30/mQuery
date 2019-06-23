@@ -2,7 +2,7 @@
  * Deep clone a DOM node and its descendants.
  * @return {[Object]}         Returns an Umbrella.js instance.
  */
-u.prototype.clone = function () {
+mq.prototype.clone = function () {
   return this.map(function (node, i) {
     var clone = node.cloneNode(true);
     var dest = this.getAll(clone);
@@ -25,12 +25,12 @@ u.prototype.clone = function () {
  * @param  {[String]} tag     DOM node tagName.
  * @return {[Array]}          Array containing queried DOM nodes.
  */
-u.prototype.getAll = function getAll (context) {
-  return u([context].concat(u('*', context).nodes));
+mq.prototype.getAll = function getAll(context) {
+  return mq([context].concat(mq('*', context).nodes));
 };
 
 // Store all of the operations to perform when cloning elements
-u.prototype.mirror = {};
+mq.prototype.mirror = {};
 
 /**
  * Copy all JavaScript events of source node to destination node.
@@ -38,12 +38,12 @@ u.prototype.mirror = {};
  * @param  {[Object]} destination DOM node
  * @return {[undefined]]}
  */
-u.prototype.mirror.events = function (src, dest) {
+mq.prototype.mirror.events = function (src, dest) {
   if (!src._e) return;
 
   for (var type in src._e) {
     src._e[type].forEach(function (event) {
-      u(dest).on(type, event);
+      mq(dest).on(type, event);
     });
   }
 };
@@ -54,8 +54,8 @@ u.prototype.mirror.events = function (src, dest) {
  * @param  {[Object]} dest DOM node
  * @return {[undefined]}
  */
-u.prototype.mirror.select = function (src, dest) {
-  if (u(src).is('select')) {
+mq.prototype.mirror.select = function (src, dest) {
+  if (mq(src).is('select')) {
     dest.value = src.value;
   }
 };
@@ -66,8 +66,8 @@ u.prototype.mirror.select = function (src, dest) {
  * @param  {[Object]} dest DOM node
  * @return {[undefined]}
  */
-u.prototype.mirror.textarea = function (src, dest) {
-  if (u(src).is('textarea')) {
+mq.prototype.mirror.textarea = function (src, dest) {
+  if (mq(src).is('textarea')) {
     dest.value = src.value;
   }
 };

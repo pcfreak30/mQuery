@@ -5,16 +5,16 @@ describe('.size()', function() {
   });
 
   it('should return this Umbrella Object', function() {
-    size(u('li').scroll(), u('li').length);
+    size(mq('li').scroll(), mq('li').length);
   });
 
   it('can get the right size', function() {
-    var size = u('body').size();
-    expect(size).to.deep.equal(u('body').first().getBoundingClientRect());
+    var size = mq('body').size();
+    expect(size).to.deep.equal(mq('body').first().getBoundingClientRect());
   });
 
   it('can get the height', function() {
-    var size = u('body').size();
-    expect(Math.round(size.height)).to.equal(u('body').first().clientHeight);
+    var size = mq('body').size();
+    expect(Math.round(size.height)).to.equal(mq('body').first().clientHeight);
   });
 });

@@ -1,6 +1,6 @@
 // Convert forms into a string able to be submitted
 // Original source: http://stackoverflow.com/q/11661187
-u.prototype.serialize = function () {
+mq.prototype.serialize = function () {
   var self = this;
 
   // Store the class in a variable for manipulation
@@ -13,7 +13,7 @@ u.prototype.serialize = function () {
 
     // Handle multiple selects
     if (el.type === 'select-multiple') {
-      u(el.options).each(function (opt) {
+      mq(el.options).each(function (opt) {
         if (opt.selected) {
           query += '&' + self.uri(el.name) + '=' + self.uri(opt.value);
         }

@@ -1,4 +1,4 @@
 // Find the size of the first matched element
-u.prototype.size = function () {
+mq.prototype.size = function () {
   return this.first().getBoundingClientRect();
 };

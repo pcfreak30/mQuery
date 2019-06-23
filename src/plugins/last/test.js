@@ -14,12 +14,12 @@ describe(".last()", function() {
   });
 
   it("returns false for non existing element", function() {
-  	expect(u('.non-existing').last()).to.equal(false);
+    expect(mq('.non-existing').last()).to.equal(false);
   });
 
   it("actually returns the last element", function() {
   	base.append('<a class="last-test">Node 1</a> <div class="last-test">Node 2</div>');
-  	expect(u('.last-test').last().nodeName).to.equal('DIV');
+    expect(mq('.last-test').last().nodeName).to.equal('DIV');
   });
 
 });

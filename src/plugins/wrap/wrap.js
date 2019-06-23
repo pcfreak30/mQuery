@@ -1,22 +1,21 @@
-u.prototype.wrap = function (selector) {
-  function findDeepestNode (node) {
+mq.prototype.wrap = function (selector) {
+  function findDeepestNode(node) {
     while (node.firstElementChild) {
       node = node.firstElementChild;
     }
 
-    return u(node);
+    return node;
   }
-  // 1) Construct dom node e.g. u('<a>'),
+
+  // 1) Construct dom node e.g. mq('<a>'),
   // 2) clone the currently matched node
   // 3) append cloned dom node to constructed node based on selector
   return this.map(function (node) {
-    return u(selector).each(function (n) {
-      findDeepestNode(n)
-        .append(node.cloneNode(true));
-
+    return mq(selector).each(function (n) {
+      var target = findDeepestNode(n);
       node
-        .parentNode
-        .replaceChild(n, node);
+        .parentNode.insertBefore(n, node)
+      target.appendChild(node)
     });
   });
 };

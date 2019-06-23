@@ -1,5 +1,5 @@
 // Based on
-if(u(document.createDocumentFragment()).append('<div>').children().length == 0) {
+if (mq(document.createDocumentFragment()).append('<div>').children().length == 0) {
   Object.defineProperty(DocumentFragment.prototype, "children", {"get" : function() {
     var arr = [],
       child = this.firstChild;
@@ -38,7 +38,7 @@ describe(".replace(newValue)", function() {
     base.append('<a class="save">Save</a>');
     var button = base.find('a.save').replace('<button class="update">Update</button>').first();
     expect(button.nodeName).to.equal('BUTTON');
-    expect(u(button).closest('body').length).to.equal(1);
+    expect(mq(button).closest('body').length).to.equal(1);
 
 
     base.find('button.update').remove();

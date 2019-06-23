@@ -1,6 +1,6 @@
 // Testing the main file
 describe(".filter(selector)", function() {
-  
+
   it("should be defined", function() {
     expect(typeof base.filter).to.equal('function');
   });
@@ -25,9 +25,9 @@ describe(".filter(selector)", function() {
 
   it("accepts an object", function() {
     expect(base.filter(base).length).to.equal(1);
-    expect(base.filter(u('.bla')).length).to.equal(0);
+    expect(base.filter(mq('.bla')).length).to.equal(0);
   });
-  
+
   it("returns the same if called empty", function() {
     expect(base.find('.not-test li').filter().length).to.equal(base.find('.not-test li').length);
     expect(base.find('.not-test li').filter('').length).to.equal(base.find('.not-test li').length);

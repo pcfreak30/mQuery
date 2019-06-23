@@ -9,12 +9,12 @@ describe(".empty()", function() {
       </div> \
     ');
 
-    expect(u('.empty-test').length).to.equal(1);
-    expect(u('.empty-test p').length).to.equal(2);
+    expect(mq('.empty-test').length).to.equal(1);
+    expect(mq('.empty-test p').length).to.equal(2);
   });
 
   afterEach(function() {
-    u('.empty-test').remove();
+    mq('.empty-test').remove();
   });
 
 
@@ -23,25 +23,25 @@ describe(".empty()", function() {
   });
 
   it("can be called even without any node", function() {
-    expect(u('.empty-test div').length).to.equal(0);
-    u('.empty-test div').empty();
+    expect(mq('.empty-test div').length).to.equal(0);
+    mq('.empty-test div').empty();
   });
 
   it("will clean text-only nodes", function() {
-    u('.empty-test').html('Hello world');
-    expect(u('.empty-test').html()).to.equal('Hello world');
-    u('.empty-test').empty();
-    expect(u('.empty-test').html()).to.equal('');
+    mq('.empty-test').html('Hello world');
+    expect(mq('.empty-test').html()).to.equal('Hello world');
+    mq('.empty-test').empty();
+    expect(mq('.empty-test').html()).to.equal('');
   });
 
   it("will clean mixed nodes", function() {
-    u('.empty-test').html('Hello world!<p>How <strong>are you</strong>?</p>');
-    u('.empty-test').empty();
-    expect(u('.empty-test').html()).to.equal('');
+    mq('.empty-test').html('Hello world!<p>How <strong>are you</strong>?</p>');
+    mq('.empty-test').empty();
+    expect(mq('.empty-test').html()).to.equal('');
   });
 
   it("should return an instance of umbrella with the empty nodes", function() {
-    var result = u('.empty-test').empty();
+    var result = mq('.empty-test').empty();
 
     expect(result).to.be.instanceof(u);
     expect(result.nodes).to.have.length(1);
@@ -49,7 +49,7 @@ describe(".empty()", function() {
   });
 
   it("empty element", function() {
-    u('.empty-test').empty();
-    expect(u('.empty-test p').length).to.equal(0);
+    mq('.empty-test').empty();
+    expect(mq('.empty-test p').length).to.equal(0);
   });
 });

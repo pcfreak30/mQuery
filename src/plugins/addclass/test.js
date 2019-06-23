@@ -107,7 +107,7 @@ describe(".addClass()", function() {
 
       base.find('li').each(function(node, i){
         hasClass('test' + i, false, node);
-        u(node).removeClass('test' + i);
+        mq(node).removeClass('test' + i);
       });
     });
 

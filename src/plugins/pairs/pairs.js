@@ -2,7 +2,7 @@
 
 // Take the arguments and a couple of callback to handle the getter/setter pairs
 // such as: .css('a'), .css('a', 'b'), .css({ a: 'b' })
-u.prototype.pairs = function (name, value, get, set) {
+mq.prototype.pairs = function (name, value, get, set) {
   // Convert it into a plain object if it is not
   if (typeof value !== 'undefined') {
     var nm = name;

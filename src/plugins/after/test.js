@@ -12,11 +12,11 @@ describe(".after(html)", function() {
 
 
   beforeEach(function(){
-    expect(u('.bla').length).to.equal(0);
+    expect(mq('.bla').length).to.equal(0);
   });
 
   afterEach(function(){
-    u('.bla').remove();
+    mq('.bla').remove();
   });
 
 

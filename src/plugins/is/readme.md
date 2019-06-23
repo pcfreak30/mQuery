@@ -32,7 +32,7 @@ Check if the current form needs to be validated
 ```js
 u('form.subscribe').on('submit', function(e) {
 
-  // Same as u('form.subscribe').hasClass('validate')
+  mq
   if (u(e.target).is('.validate')) {
     validate();
   }
